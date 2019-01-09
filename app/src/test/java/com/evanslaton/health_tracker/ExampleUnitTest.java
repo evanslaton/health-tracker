@@ -1,7 +1,10 @@
 package com.evanslaton.health_tracker;
 
-import org.junit.Test;
+import android.view.View;
+import android.widget.ImageView;
 
+import org.junit.Test;
+// import junit.framework.TestCase;
 import static org.junit.Assert.*;
 
 /**
