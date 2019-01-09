@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     // Stopwatch code by Amit Kumar Singh - https://www.c-sharpcorner.com/article/creating-stop-watch-android-application-tutorial/
     TextView timer;
     Button startStop, reset;
-    long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L;
+    long milliSecondTime, startTime, timeBuffer, updateTime = 0L;
     Handler handler;
-    int Seconds, Minutes, MilliSeconds;
+    int hours, minutes, seconds, milliSeconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (reset.isEnabled()) {
-                    StartTime = SystemClock.uptimeMillis();
+                    startTime = SystemClock.uptimeMillis();
                     handler.postDelayed(runnable, 0);
                     reset.setEnabled(false);
+                    startStop.setText("Stop");
                 } else {
-                    TimeBuff += MillisecondTime;
+                    timeBuffer += milliSecondTime;
                     handler.removeCallbacks(runnable);
                     reset.setEnabled(true);
+                    startStop.setText("Start");
                 }
             }
         });
@@ -55,14 +58,15 @@ public class MainActivity extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MillisecondTime = 0L ;
-                StartTime = 0L ;
-                TimeBuff = 0L ;
-                UpdateTime = 0L ;
-                Seconds = 0 ;
-                Minutes = 0 ;
-                MilliSeconds = 0 ;
-                timer.setText("0:00.000");
+                milliSecondTime = 0L;
+                startTime = 0L;
+                timeBuffer = 0L;
+                updateTime = 0L;
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
+                milliSeconds = 0;
+                timer.setText("0:00:00.000");
             }
         });
     }
@@ -70,16 +74,50 @@ public class MainActivity extends AppCompatActivity {
     // Runs the stopwatch in a new thread
     public Runnable runnable = new Runnable() {
         public void run() {
-            MillisecondTime = SystemClock.uptimeMillis() - StartTime;
-            UpdateTime = TimeBuff + MillisecondTime;
-            Seconds = (int) (UpdateTime / 1000);
-            Minutes = Seconds / 60;
-            Seconds = Seconds % 60;
-            MilliSeconds = (int) (UpdateTime % 1000);
-            timer.setText("" + Minutes + ":"
-                    + String.format("%02d", Seconds) + "."
-                    + String.format("%03d", MilliSeconds));
+            milliSecondTime = SystemClock.uptimeMillis() - startTime;
+            updateTime = timeBuffer + milliSecondTime;
+            hours = seconds / 360;
+            minutes = seconds / 60;
+            seconds = (int) (updateTime / 1000);
+            seconds = seconds % 60;
+            milliSeconds = (int) (updateTime % 1000);
+            timer.setText("" + hours + ":"
+                    + String.format("%02d", minutes) + ":"
+                    + String.format("%02d", seconds) + "."
+                    + String.format("%03d", milliSeconds));
             handler.postDelayed(this, 0);
         }
     };
+
+    // Image carousel
+    int imageCounter = 0;
+    Image[] images = {new Image(R.drawable.forearm1, "Be the best version of yourself"),
+            new Image(R.drawable.forearm2, "Only 7 minutes a day"),
+            new Image(R.drawable.forearm3, "Two arms with amazing forearms")};
+
+    // Changes image and caption to the next image
+    public void nextImage(View v) {
+        imageCounter++;
+        if (imageCounter > 2) {
+            imageCounter = 0;
+        }
+        ImageView image = findViewById(R.id.imageCarousel);
+        TextView caption = findViewById(R.id.imageCaption);
+
+        image.setImageResource(images[imageCounter].source);
+        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
+    }
+
+    // Changes image and caption to the previous image
+    public void previousImage(View v) {
+        imageCounter--;
+        if (imageCounter < 0) {
+            imageCounter = 2;
+        }
+        ImageView image = findViewById(R.id.imageCarousel);
+        TextView caption = findViewById(R.id.imageCaption);
+
+        image.setImageResource(images[imageCounter].source);
+        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
+    }
 }
