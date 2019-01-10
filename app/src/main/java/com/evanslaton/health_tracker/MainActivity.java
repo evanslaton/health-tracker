@@ -1,8 +1,13 @@
 package com.evanslaton.health_tracker;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
+    public static final String CHANNEL_ID = "channelId";
+    private int notificationId = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +36,25 @@ public class MainActivity extends AppCompatActivity {
     public void goToFingerExercise(View v) {
         Intent fingerExerciseIntent = new Intent(this, FingerExercise.class);
         startActivity(fingerExerciseIntent);
+    }
+
+    public void notifyUserToDrinkWater(View v) {
+        // from https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("Drink water")
+                        .setContentText("Drink water please!")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Drink water please!"))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+                notificationManager.notify(notificationId++, mBuilder.build());
+            }
+        }, 5000, 5000);
     }
 
     // Image carousel

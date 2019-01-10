@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".Stopwatch" android:parentActivityName=".MainActivity" />
         <activity android:name=".FingerExercise" android:parentActivityName=".MainActivity" />
+        <receiver android:name=".Notification" />
     </application>
 
 </manifest>
