@@ -1,7 +1,13 @@
 package com.evanslaton.health_tracker;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,85 +15,48 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    // Updates the finger count exercise counter
-    public void increaseCount(View v) {
-        TextView counterText = findViewById(R.id.counter);
-        int counter = Integer.parseInt(counterText.getText().toString());
-        counter++;
-        counterText.setText(String.valueOf(counter));
-    }
+import java.util.Timer;
+import java.util.TimerTask;
 
-    // Stopwatch code by Amit Kumar Singh - https://www.c-sharpcorner.com/article/creating-stop-watch-android-application-tutorial/
-    TextView timer;
-    Button startStop, reset;
-    long milliSecondTime, startTime, timeBuffer, updateTime = 0L;
-    Handler handler;
-    int hours, minutes, seconds, milliSeconds;
+public class MainActivity extends AppCompatActivity {
+    public static final String CHANNEL_ID = "channelId";
+    private int notificationId = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Stopwatch variables
-        timer = (TextView)findViewById(R.id.timer);
-        startStop = (Button)findViewById(R.id.startStopButton);
-        reset = (Button)findViewById(R.id.resetButton);
-        handler = new Handler() ;
-
-        // Starts the stopwatch
-        startStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (reset.isEnabled()) {
-                    startTime = SystemClock.uptimeMillis();
-                    handler.postDelayed(runnable, 0);
-                    reset.setEnabled(false);
-                    startStop.setText("Stop");
-                } else {
-                    timeBuffer += milliSecondTime;
-                    handler.removeCallbacks(runnable);
-                    reset.setEnabled(true);
-                    startStop.setText("Start");
-                }
-            }
-        });
-
-        // Resets the stopwatch
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                milliSecondTime = 0L;
-                startTime = 0L;
-                timeBuffer = 0L;
-                updateTime = 0L;
-                hours = 0;
-                minutes = 0;
-                seconds = 0;
-                milliSeconds = 0;
-                timer.setText("0:00:00.000");
-            }
-        });
     }
 
-    // Runs the stopwatch in a new thread
-    public Runnable runnable = new Runnable() {
-        public void run() {
-            milliSecondTime = SystemClock.uptimeMillis() - startTime;
-            updateTime = timeBuffer + milliSecondTime;
-            hours = seconds / 360;
-            minutes = seconds / 60;
-            seconds = (int) (updateTime / 1000);
-            seconds = seconds % 60;
-            milliSeconds = (int) (updateTime % 1000);
-            timer.setText("" + hours + ":"
-                    + String.format("%02d", minutes) + ":"
-                    + String.format("%02d", seconds) + "."
-                    + String.format("%03d", milliSeconds));
-            handler.postDelayed(this, 0);
-        }
-    };
+    public void goToStopwatch(View v) {
+        Intent stopwatchIntent = new Intent(this, Stopwatch.class);
+        startActivity(stopwatchIntent);
+    }
+
+    public void goToFingerExercise(View v) {
+        Intent fingerExerciseIntent = new Intent(this, FingerExercise.class);
+        startActivity(fingerExerciseIntent);
+    }
+
+    public void notifyUserToDrinkWater(View v) {
+        // from https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("Drink water")
+                        .setContentText("Drink water please!")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Drink water please!"))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+                notificationManager.notify(notificationId++, mBuilder.build());
+            }
+        }, 3000, 3000);
+//          }, 7200000, 7200000);
+    }
 
     // Image carousel
     int imageCounter = 0;
