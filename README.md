@@ -7,11 +7,19 @@
 ![Lab 26: Android Fundamentals](screenshots/screenshot.png)
 
 ## Lab 27: Intents, Notifications and XML
-* Incomplete
+* Move your Finger Exercises and Stopwatch into their own pages of your app. Add buttons on the homepage to link to those pages, and ensure that the user can use the back button on the device to return to the app homepage.
+* Create a new activity for Notifications. Allow users to set up reminders to drink water, which should appear every 2 hours in the notification bar. (For testing, you might want to shorten this to 15 or 30 seconds.)
+
+![Lab 27: Intents, Notifications and XML](screenshots/screenshot2.png)
 
 ## Change Log
-* 1/8/2019 - Added Lab 26 feature one (finger exerciser)
-* 1/9/2019 - Added Lab26 features two and three (stopwatch and image carousel)
+* 1/8/2019 - Added Lab 26 feature one (finger exerciser).
+* 1/9/2019 - Added Lab 26 features two and three (stopwatch and image carousel).
+* 1/10/2019 - Completed Lab 27:
+    * Moved stopwatch and finger exercise to their own pages.
+    * Added buttons to the homescreen so users access the new pages.
+    * Created a button that will send a notification every 2 hours to the user reminding them to drink water (to test every 3 seconds uncomment line 57 and comment out line 58).
 
 ## Libraries / Third Party Sources
 * Stopwatch code by Amit Kumar Singh - https://www.c-sharpcorner.com/article/creating-stop-watch-android-application-tutorial/
+* Recurring notification code by https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second

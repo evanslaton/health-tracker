@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificationId++, mBuilder.build());
             }
-        }, 5000, 5000);
+        }, 3000, 3000);
+//          }, 7200000, 7200000);
     }
 
     // Image carousel
