@@ -16,8 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Stopwatch" android:parentActivityName=".MainActivity" />
-        <activity android:name=".FingerExercise" android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Stopwatch"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FingerExercise"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".Diary"
+            android:parentActivityName=".MainActivity" />
+
         <receiver android:name=".Notification" />
     </application>
 

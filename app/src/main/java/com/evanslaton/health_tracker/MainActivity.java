@@ -28,16 +28,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    // Takes the user to their stopwatch view
     public void goToStopwatch(View v) {
         Intent stopwatchIntent = new Intent(this, Stopwatch.class);
         startActivity(stopwatchIntent);
     }
 
+    // Takes the user to their finger exercise view
     public void goToFingerExercise(View v) {
         Intent fingerExerciseIntent = new Intent(this, FingerExercise.class);
         startActivity(fingerExerciseIntent);
     }
 
+    // Takes the user to their exercise diary view
+    public void goToDiary(View v) {
+        Intent diaryIntent = new Intent(this, Diary.class);
+        startActivity(diaryIntent);
+    }
+
+    // Notifies the user to drink water every 2 hours, swap in line 65 for 67 to test every 5 seconds
     public void notifyUserToDrinkWater(View v) {
         // from https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second
         Timer t = new Timer();
