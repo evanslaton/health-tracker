@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+// From Google's Android docs and http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Exercise> exercises;
 

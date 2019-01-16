@@ -8,8 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.List;
-
+// From Google's Android docs and http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
 public class Diary extends AppCompatActivity {
     protected ExerciseDatabase exerciseDatabase;
     private RecyclerView mRecyclerView;
@@ -29,9 +28,6 @@ public class Diary extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
 
-        // Improves performance if changes in content do not change the layout size of the RecyclerView
-        // mRecyclerView.setHasFixedSize(true);
-
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -40,17 +36,14 @@ public class Diary extends AppCompatActivity {
         mAdapter = new MyAdapter(exerciseDatabase.exerciseDao().getAll());
         mRecyclerView.setAdapter(mAdapter);
 
-        //
+        // Adds an exercise to the database if the database is empty to avoid a NullPointerException
         if (exerciseDatabase.exerciseDao().getAll().isEmpty()) {
             Exercise newExercise = new Exercise("Bench Press", 10, "Push heavy things against gravity");
             exerciseDatabase.exerciseDao().insertExercise(newExercise);
         }
     }
 
-//    public void showExercises() {
-//        List<Exercise> exercises = exerciseDatabase.exerciseDao().getAll();
-//    }
-
+    // Saves user input to the database
     public void addExercise(View v) {
         EditText editViewTitle = findViewById(R.id.exerciseTitle);
         EditText editViewReps = (findViewById(R.id.reps));
@@ -63,7 +56,7 @@ public class Diary extends AppCompatActivity {
         Exercise newExercise = new Exercise(title, reps, description);
         exerciseDatabase.exerciseDao().insertExercise(newExercise);
 
-        // https://stackoverflow.com/questions/3053761/reload-activity-in-android - from Jessica Lovell
+        // https://stackoverflow.com/questions/3053761/reload-activity-in-android
         finish();
         startActivity(getIntent());
     }
