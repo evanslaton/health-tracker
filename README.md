@@ -12,6 +12,11 @@
 
 ![Lab 27: Intents, Notifications and XML](screenshots/screenshot2.png)
 
+## Lab 28: Layouts, DBs and ListViews
+
+![Lab 28: Layouts, DBs and ListViews](screenshots/screenshot3.png)
+
+
 ## Change Log
 * 1/8/2019 - Added Lab 26 feature one (finger exerciser).
 * 1/9/2019 - Added Lab 26 features two and three (stopwatch and image carousel).
