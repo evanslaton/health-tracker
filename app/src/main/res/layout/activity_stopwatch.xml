@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="84dp"
-        android:text="0:00:00.000"
+        android:text="@string/_0_00_00_000"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/startStopButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="150dp"
-        android:text="Start"
+        android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/resetButton"
         app:layout_constraintHorizontal_bias="0.083"
@@ -38,7 +38,7 @@
         android:layout_height="0dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="150dp"
-        android:text="Reset"
+        android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
