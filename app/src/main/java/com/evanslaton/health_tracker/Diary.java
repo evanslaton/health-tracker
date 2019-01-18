@@ -1,12 +1,18 @@
 package com.evanslaton.health_tracker;
 
 import android.arch.persistence.room.Room;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 // From Google's Android docs and http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
 public class Diary extends AppCompatActivity {
@@ -14,12 +20,16 @@ public class Diary extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary2);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        // Fused Location Provider Client
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Creates a singleton of the database
         exerciseDatabase = Room.databaseBuilder(getApplicationContext(),
@@ -45,10 +55,25 @@ public class Diary extends AppCompatActivity {
 
     // Saves user input to the database
     public void addExercise(View v) {
+
+        // Gets the user's location
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        Log.i("Location:", location.toString());
+                        if (location != null) {
+                            // Logic to handle location object
+                            Log.i("Location", "It did not work as expected");
+                        }
+                    }
+                });
+
+        // Get user input
         EditText editViewTitle = findViewById(R.id.exerciseTitle);
         EditText editViewReps = (findViewById(R.id.reps));
         EditText editViewDescription = findViewById(R.id.description);
-
         String title = editViewTitle.getText().toString();
         int reps = Integer.parseInt(editViewReps.getText().toString());
         String description = editViewDescription.getText().toString();
