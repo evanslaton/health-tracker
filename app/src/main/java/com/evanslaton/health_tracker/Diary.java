@@ -19,7 +19,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // From Google's Android docs and http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
 public class Diary extends AppCompatActivity {
@@ -110,8 +112,48 @@ public class Diary extends AppCompatActivity {
         Exercise newExercise = new Exercise(title, reps, description);
         exerciseDatabase.exerciseDao().insertExercise(newExercise);
 
+        // Adds to Heroku DB
+        addExercisesToHerokuDB(title, String.valueOf(reps), description);
+
         // https://stackoverflow.com/questions/3053761/reload-activity-in-android
         finish();
         startActivity(getIntent());
+    }
+
+    // http://www.itsalif.info/content/android-volley-tutorial-http-get-post-put
+    public void addExercisesToHerokuDB(final String title, final String reps, final String description) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://health-tracker-backend.herokuapp.com/exercises";
+
+        // Request a string response from the provided URL.
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // Response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error
+                        Log.d("Error.Response", "It didn't work");
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("title", title);
+                params.put("quantity", reps);
+                params.put("description", description);
+                return params;
+            }
+        };
+        queue.add(postRequest);
     }
 }
