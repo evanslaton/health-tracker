@@ -48,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Get elements from the dataset and replaces the contents of the view with the element
         holder.title.setText(exercises.get(position).quantity + " " + exercises.get(position).title + " " + exercises.get(position).timestamp);
-        holder.description.setText(exercises.get(position).description);
+        holder.description.setText(exercises.get(position).description  + " lat: " + exercises.get(position).latitude + " lon: " + exercises.get(position).longitude);
     }
 
     // Returns the size of the dataset (invoked by the layout manager)

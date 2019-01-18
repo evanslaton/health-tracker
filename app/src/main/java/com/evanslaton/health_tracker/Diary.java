@@ -1,8 +1,19 @@
 package com.evanslaton.health_tracker;
 
+//import android.arch.persistence.room.Room;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+//import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+//import android.support.v7.widget.LinearLayoutManager;
+//import android.support.v7.widget.RecyclerView;
+
+import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+//import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +21,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,13 +43,21 @@ public class Diary extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FusedLocationProviderClient mFusedLocationClient;
     private List<Exercise> exercises = new ArrayList<>();
+    private final int PERMISSION_ID = 0;
+    private String latitude;
+    private String longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary2);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        // Fused Location Provider Client
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getUserLocation();
 
         // Creates a singleton of the database
         exerciseDatabase = Room.databaseBuilder(getApplicationContext(),
@@ -56,16 +78,16 @@ public class Diary extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // Adds an exercise to the database if the database is empty to avoid a NullPointerException
-        if (exerciseDatabase.exerciseDao().getAll().isEmpty()) {
-            Exercise newExercise = new Exercise("Bench Press", 10, "Push heavy things against gravity");
-            exerciseDatabase.exerciseDao().insertExercise(newExercise);
-        }
+//        if (exerciseDatabase.exerciseDao().getAll().isEmpty()) {
+//            Exercise newExercise = new Exercise("Bench Press", 10, "Push heavy things against gravity");
+//            exerciseDatabase.exerciseDao().insertExercise(newExercise);
+//        }
     }
 
     // Gets exercises from health-tracker-backend database
     public void getExercisesFromHerokuDB() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://health-tracker-backend.herokuapp.com/exercises";
+        String url = "https://health-tracker-backend.herokuapp.com/exercises";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest =
@@ -99,21 +121,71 @@ public class Diary extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    // Gets the users location
+    public void getUserLocation() {
+        // Checks to see if the app has received permission from the user to get location data
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // If permission hasn't been granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_ID);
+        } else {
+            // If permission has been granted, get location data
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                Log.d("location", "Location is: " + location.getLatitude());
+                                Log.d("location", "Location is: " + location.getLatitude());
+                                latitude = String.valueOf(location.getLatitude());
+                                longitude = String.valueOf(location.getLongitude());
+                            } else {
+                                // Logic to handle location object
+                                latitude = "Unknown";
+                                longitude = "Unknown";
+                            }
+                        }
+                    });
+        }
+    }
+
+    // Checks to see if the user granted location permissions
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ID: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getUserLocation();
+                } else {
+                    // permission denied
+                    latitude = "Unknown";
+                    longitude = "Unknown";
+                }
+                return;
+            }
+        }
+    }
+
     // Saves user input to the database
     public void addExercise(View v) {
+        // Get user input
         EditText editViewTitle = findViewById(R.id.exerciseTitle);
         EditText editViewReps = (findViewById(R.id.reps));
         EditText editViewDescription = findViewById(R.id.description);
-
         String title = editViewTitle.getText().toString();
         int reps = Integer.parseInt(editViewReps.getText().toString());
         String description = editViewDescription.getText().toString();
 
-        Exercise newExercise = new Exercise(title, reps, description);
+        // Adds the exercise to the database
+        Exercise newExercise = new Exercise(title, reps, description, latitude, longitude);
         exerciseDatabase.exerciseDao().insertExercise(newExercise);
 
-        // Adds to Heroku DB
-        addExercisesToHerokuDB(title, String.valueOf(reps), description);
+        // Adds the exercise to Heroku Database
+        addExercisesToHerokuDB(title, String.valueOf(reps), description, latitude, longitude);
 
         // https://stackoverflow.com/questions/3053761/reload-activity-in-android
         finish();
@@ -121,7 +193,8 @@ public class Diary extends AppCompatActivity {
     }
 
     // http://www.itsalif.info/content/android-volley-tutorial-http-get-post-put
-    public void addExercisesToHerokuDB(final String title, final String reps, final String description) {
+    // Adds exercises to the Heroku Database
+    public void addExercisesToHerokuDB(final String title, final String reps, final String description, final String latitude, final String longitude) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://health-tracker-backend.herokuapp.com/exercises";
 
@@ -151,6 +224,8 @@ public class Diary extends AppCompatActivity {
                 params.put("title", title);
                 params.put("quantity", reps);
                 params.put("description", description);
+                params.put("latitude", latitude);
+                params.put("longitude", longitude);
                 return params;
             }
         };

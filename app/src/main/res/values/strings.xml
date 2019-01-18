@@ -1,4 +1,26 @@
 <resources>
     <string name="app_name">health-tracker</string>
     <string name="title_activity_diary">Diary</string>
+    <string name="be_the_best_version_of_yourself_1_3">Be the best version of yourself (1/3)</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="stopwatch">Stopwatch</string>
+    <string name="finger_exercise">Finger Exercise</string>
+    <string name="notify_user">Notify User</string>
+    <string name="exercise_diary">Exercise Diary</string>
+    <string name="add_exercise">Add Exercise</string>
+    <string name="get_swole">GET SWOLE!</string>
+    <string name="exercise_title">Exercise Title</string>
+    <string name="reps">Reps</string>
+    <string name="exercise_description">Exercise Description</string>
+    <string name="click">Click</string>
+    <string name="_0">0</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="_0_00_00_000">0:00:00.000</string>
+    <string name="description">Description</string>
+    <string name="example_application">Example application</string>
+    <string name="todo">TODO</string>
+
+
 </resources>
