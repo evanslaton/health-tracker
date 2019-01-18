@@ -1,9 +1,9 @@
 package com.evanslaton.health_tracker;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -38,20 +39,19 @@ public class ExampleInstrumentedTest {
         exerciseDatabase.close();
     }
 
+    // Tests adding and retrieving an exercise and turning an exercise into its String representation
     @Test
     public void writeUserAndReadInList() throws Exception {
-//        User user = TestUtil.createUser(3);
-//        user.setName("george");
-//        mUserDao.insert(user);
-//        List<User> byName = mUserDao.findUsersByName("george");
-//        assertThat(byName.get(0), equalTo(user));
-
         Exercise newExercise = new Exercise("Test", 5000, "This is a test description");
         exerciseDao.insertExercise(newExercise);
         List<Exercise> exercises = exerciseDao.getAll();
         assertFalse(exercises.isEmpty());
+        assertEquals(1, exercises.size());
+        assertEquals(newExercise.title, exercises.get(0).title);
+        assertEquals(newExercise.quantity, exercises.get(0).quantity);
+        assertEquals(newExercise.description, exercises.get(0).description);
+        assertEquals(newExercise.timestamp, exercises.get(0).timestamp);
     }
-
 
     @Test
     public void useAppContext() {
