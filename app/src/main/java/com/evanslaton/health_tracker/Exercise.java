@@ -1,7 +1,7 @@
 package com.evanslaton.health_tracker;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
@@ -13,15 +13,19 @@ public class Exercise {
     public int quantity;
     public String description;
     public String timestamp;
+    public String latitude;
+    public String longitude;
 
     // Default constructor
     public Exercise() {};
 
     // Constructor
-    public Exercise(String title, int quantity, String description) {
+    public Exercise(String title, int quantity, String description, String latitude, String longitude) {
         this.title = title;
         this.quantity = quantity;
         this.description = description;
         this.timestamp = new Date().toString();
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
