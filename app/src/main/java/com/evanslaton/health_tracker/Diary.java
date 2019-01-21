@@ -239,7 +239,9 @@ public class Diary extends AppCompatActivity {
 
     // Shows the user's username at the top of the page
     public void showUsername() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
         String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
         TextView userData = findViewById(R.id.username2);
         userData.setText("Hi, " + username);

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showUsername();
-//        showUserData();
+        updateHomepageVisitCounter();
     }
 
     // Takes the user to their stopwatch view
@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Shows the user's username at the top of the page
     public void showUsername() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
         String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
         TextView userData = findViewById(R.id.username);
         userData.setText("Hi, " + username);
@@ -113,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
     public void saveUsername(View v) {
         EditText usernameText = findViewById(R.id.usernameInput);
         String username = usernameText.getText().toString();
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.username), username);
         editor.commit();
@@ -123,21 +127,19 @@ public class MainActivity extends AppCompatActivity {
         usernameText.setText("");
     }
 
-    // Loads data from shared preferences to the page
-//    public void showUserData() {
-//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//        String username = sharedPref.getString(getString(R.string.username), "Unknown");
-//        String counter = sharedPref.getString(getString(R.string.counter), "0");
-//        int visited = Integer.parseInt(sharedPref.getString(getString(R.string.visited) + 1, "0"));
-//
-//        // Updates the homepage visited counter and stores to shared preferences
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString(getString(R.string.counter), String.valueOf(counter));
-//        editor.commit();
-//
-//        // Adds content to the page
-//        TextView userData = findViewById(R.id.sharedPreferenceData);
-//        userData.setText("Hello " + username + ", homepage visits: " + visited + ", Finger exercise: " + counter);
-//    }
+    // Keeps track of how many times the user has visited the homepage
+    public void updateHomepageVisitCounter() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.counter), Context.MODE_PRIVATE);
+        int counter = sharedPref.getInt(getString(R.string.counter), 0);
+        counter++;
 
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.counter), counter);
+        editor.commit();
+
+        TextView counterField = findViewById(R.id.homepageVisitCounter);
+        counterField.setText(String.valueOf(counter));
+    }
 }

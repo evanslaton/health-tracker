@@ -23,8 +23,8 @@
     <string name="todo">TODO</string>
     <string name="save_username">Save Username</string>
     <string name="usernameInput">Username</string>
-    <string name="username"></string>
-    <string name="counter"></string>
-    <string name="visited"></string>
+    <string name="username">username</string>
+    <string name="counter">counter</string>
+    <string name="visited">visited</string>
 
 </resources>
