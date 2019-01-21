@@ -1,5 +1,7 @@
 package com.evanslaton.health_tracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.SystemClock;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,8 @@ public class Stopwatch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
+
+        showUsername();
 
         // Stopwatch variables
         timer = (TextView)findViewById(R.id.timer);
@@ -79,4 +83,14 @@ public class Stopwatch extends AppCompatActivity {
             handler.postDelayed(this, 0);
         }
     };
+
+    // Shows the user's username at the top of the page
+    public void showUsername() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
+        TextView userData = findViewById(R.id.username4);
+        userData.setText("Hi, " + username);
+    }
 }

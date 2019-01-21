@@ -3,6 +3,8 @@ package com.evanslaton.health_tracker;
 //import android.arch.persistence.room.Room;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 //import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -54,6 +57,8 @@ public class Diary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary2);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        showUsername();
 
         // Fused Location Provider Client
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -230,5 +235,15 @@ public class Diary extends AppCompatActivity {
             }
         };
         queue.add(postRequest);
+    }
+
+    // Shows the user's username at the top of the page
+    public void showUsername() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
+        TextView userData = findViewById(R.id.username2);
+        userData.setText("Hi, " + username);
     }
 }

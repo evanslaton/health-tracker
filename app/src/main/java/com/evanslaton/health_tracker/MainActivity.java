@@ -1,12 +1,17 @@
 package com.evanslaton.health_tracker;
 
+import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showUsername();
+        updateHomepageVisitCounter();
+        loadCounter();
     }
 
     // Takes the user to their stopwatch view
@@ -92,5 +100,58 @@ public class MainActivity extends AppCompatActivity {
 
         image.setImageResource(images[imageCounter].source);
         caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
+    }
+
+    // Shows the user's username at the top of the page
+    public void showUsername() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
+        TextView userData = findViewById(R.id.username);
+        userData.setText("Hi, " + username);
+    }
+
+    // Save user's username
+    public void saveUsername(View v) {
+        EditText usernameText = findViewById(R.id.usernameInput);
+        String username = usernameText.getText().toString();
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.username), username);
+        editor.commit();
+
+        TextView userData = findViewById(R.id.username);
+        userData.setText("Hi, " + username);
+        usernameText.setText("");
+    }
+
+    // Keeps track of how many times the user has visited the homepage
+    public void updateHomepageVisitCounter() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.visited), Context.MODE_PRIVATE);
+        int visited = sharedPref.getInt(getString(R.string.visited), 0);
+        visited++;
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.visited), visited);
+        editor.commit();
+
+        TextView visitedField = findViewById(R.id.homepageVisitCounter);
+        visitedField.setText(String.valueOf(visited));
+    }
+
+    // Keeps track of the finger exerciser count
+    public void loadCounter() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.counter), Context.MODE_PRIVATE);
+        int counter = sharedPref.getInt(getString(R.string.counter), 0);
+
+        TextView fingerExerciseField = findViewById(R.id.fingerExerciseCounter);
+        fingerExerciseField .setText(String.valueOf(counter));
     }
 }
