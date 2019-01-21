@@ -19,12 +19,20 @@
 
 ![Lab 28: Layouts, DBs and ListViews](screenshots/screenshot3.png)
 
+Lab 33: Threading, Async, Web
+* Add a replica of your Exercise model to the backend Spring app. Create a POST route that allows creating a new Exercise, and a GET route that responds with all Exercises currently in the database. Test these routes with Postman, deploy, and ensure there’s at least one Exercise in your deployed db.
+* When a user opens the Exercise Diary page, the app should make a request to the server to retrieve all the Exercises in the server’s database. It should display both those Exercises and the ones that are local to the device within the Diary page.
+* When a user creates a new Exercise locally on their device, in addition to saving it to the local database, the app should POST it to the server.
+
+![Lab 33: Threading, Async, Web](screenshots/screenshot4.png)
+![Lab 33: Threading, Async, Web](screenshots/screenshot4.1.png)
+
 ## Lab 34: Strings & Location
 * Remove all hardcoded strings from your UI, and instead use the strings.xml file.
 * When a user adds an exercise, they should be able to include their current location. Update your models appropriately, and display the location within the ListView.
 * Ensure that the user’s username is correctly displayed throughout the app. Also, modify the homepage to include some key stats, such as the current finger exercise count and the total number of times the user has visited the homepage.
 
-![Lab 34: Strings & Location](screenshots/screenshot4.png)
+![Lab 34: Strings & Location](screenshots/screenshot5.png)
 
 ## Change Log
 * 1/8/2019 - Added Lab 26 feature one (finger exerciser).
@@ -41,7 +49,7 @@
   * Adding an exercise
   * Retrieving exercises from the database
   * Any logic about turning an exercise into its String representation
-* 1/18/2019 - Finished the string.xml and location features for Lab 34
+* 1/18/2019 - Finished Lab 33 (adding and viewing exercise to Heroku Database) and the string.xml and location features for Lab 34
 * 1/21/2019 - Finished the shared preferences feature for Lab 34
 
 ## Health-Tracker-Backend
