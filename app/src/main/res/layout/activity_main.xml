@@ -9,14 +9,14 @@
     <ImageView
         android:id="@+id/imageCarousel"
         android:layout_width="356dp"
-        android:layout_height="243dp"
+        android:layout_height="203dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/forearm1"
+        app:layout_constraintBottom_toTopOf="@+id/imageCaption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/forearm1" />
 
     <TextView
@@ -24,45 +24,45 @@
         android:layout_width="274dp"
         android:layout_height="26dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/be_the_best_version_of_yourself_1_3"
         android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/prevButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCarousel" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/prevButton"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="8dp"
         android:onClick="previousImage"
         android:text="@string/previous"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCaption" />
+        app:layout_constraintBottom_toTopOf="@+id/diaryButton"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/nextButton"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:onClick="nextImage"
         android:text="@string/next"
+        app:layout_constraintBottom_toTopOf="@+id/notificationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/prevButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageCaption" />
+        app:layout_constraintStart_toEndOf="@+id/prevButton" />
 
     <Button
         android:id="@+id/toStopwatch"
         android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:onClick="goToStopwatch"
         android:text="@string/stopwatch"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +73,7 @@
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:onClick="goToFingerExercise"
         android:text="@string/finger_exercise"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,7 @@
         android:layout_width="149dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:onClick="notifyUserToDrinkWater"
         android:text="@string/notify_user"
         app:layout_constraintBottom_toTopOf="@+id/toFingerExercise"
@@ -96,12 +96,48 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:onClick="goToDiary"
         android:text="@string/exercise_diary"
         app:layout_constraintBottom_toTopOf="@+id/toStopwatch"
         app:layout_constraintEnd_toStartOf="@+id/notificationButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/saveUsernameButton"
+        android:layout_width="147dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="saveUsername"
+        android:text="@string/save_username"
+        app:layout_constraintBottom_toTopOf="@+id/imageCarousel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="169dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/usernameInput"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/imageCarousel"
+        app:layout_constraintEnd_toStartOf="@+id/saveUsernameButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="287dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

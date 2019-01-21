@@ -21,6 +21,10 @@
     <string name="description">Description</string>
     <string name="example_application">Example application</string>
     <string name="todo">TODO</string>
-
+    <string name="save_username">Save Username</string>
+    <string name="usernameInput">Username</string>
+    <string name="username"></string>
+    <string name="counter"></string>
+    <string name="visited"></string>
 
 </resources>
