@@ -26,5 +26,9 @@
     <string name="username">username</string>
     <string name="counter">counter</string>
     <string name="visited">visited</string>
+    <string name="finger_exercise_count">Finger Exercise Count:</string>
+    <string name="_02">0</string>
+    <string name="_03">0</string>
+    <string name="homepage_visits">Homepage Visits:</string>
 
 </resources>

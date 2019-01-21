@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         showUsername();
         updateHomepageVisitCounter();
+        loadCounter();
     }
 
     // Takes the user to their stopwatch view
@@ -131,15 +132,26 @@ public class MainActivity extends AppCompatActivity {
     public void updateHomepageVisitCounter() {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(
-                getString(R.string.counter), Context.MODE_PRIVATE);
-        int counter = sharedPref.getInt(getString(R.string.counter), 0);
-        counter++;
+                getString(R.string.visited), Context.MODE_PRIVATE);
+        int visited = sharedPref.getInt(getString(R.string.visited), 0);
+        visited++;
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(getString(R.string.counter), counter);
+        editor.putInt(getString(R.string.visited), visited);
         editor.commit();
 
-        TextView counterField = findViewById(R.id.homepageVisitCounter);
-        counterField.setText(String.valueOf(counter));
+        TextView visitedField = findViewById(R.id.homepageVisitCounter);
+        visitedField.setText(String.valueOf(visited));
+    }
+
+    // Keeps track of the finger exerciser count
+    public void loadCounter() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.counter), Context.MODE_PRIVATE);
+        int counter = sharedPref.getInt(getString(R.string.counter), 0);
+
+        TextView fingerExerciseField = findViewById(R.id.fingerExerciseCounter);
+        fingerExerciseField .setText(String.valueOf(counter));
     }
 }

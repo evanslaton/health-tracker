@@ -19,6 +19,13 @@
 
 ![Lab 28: Layouts, DBs and ListViews](screenshots/screenshot3.png)
 
+## Lab 34: Strings & Location
+* Remove all hardcoded strings from your UI, and instead use the strings.xml file.
+* When a user adds an exercise, they should be able to include their current location. Update your models appropriately, and display the location within the ListView.
+* Ensure that the user’s username is correctly displayed throughout the app. Also, modify the homepage to include some key stats, such as the current finger exercise count and the total number of times the user has visited the homepage.
+
+![Lab 34: Strings & Location](screenshots/screenshot4.png)
+
 ## Change Log
 * 1/8/2019 - Added Lab 26 feature one (finger exerciser).
 * 1/9/2019 - Added Lab 26 features two and three (stopwatch and image carousel).
@@ -34,6 +41,11 @@
   * Adding an exercise
   * Retrieving exercises from the database
   * Any logic about turning an exercise into its String representation
+* 1/18/2019 - Finished the string.xml and location features for Lab 34
+* 1/21/2019 - Finished the shared preferences feature for Lab 34
+
+## Health-Tracker-Backend
+[Health-Tracker-Backend](https://github.com/evanslaton/health-tracker-backend)
 
 ## Libraries / Third Party Sources
 * Stopwatch code by Amit Kumar Singh - https://www.c-sharpcorner.com/article/creating-stop-watch-android-application-tutorial/
