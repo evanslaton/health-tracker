@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,6 +50,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(diaryIntent);
     }
 
+    // Takes the user to the image carousel
+    public void goToImageCarousel(View v) {
+        Intent imageCarouselIntent = new Intent(this, ImageCarousel.class);
+        startActivity(imageCarouselIntent);
+    }
+
+    // Takes the user to the profile page
+    public void goToProfile(View v) {
+        Intent ProfileIntent = new Intent(this, Profile.class);
+        startActivity(ProfileIntent);
+    }
+
     // Notifies the user to drink water every 2 hours, swap in line 65 for 67 to test every 5 seconds
     public void notifyUserToDrinkWater(View v) {
         // from https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second
@@ -68,38 +81,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 3000, 3000);
 //          }, 7200000, 7200000);
-    }
-
-    // Image carousel
-    int imageCounter = 0;
-    Image[] images = {new Image(R.drawable.forearm1, "Be the best version of yourself"),
-            new Image(R.drawable.forearm2, "Only 7 minutes a day"),
-            new Image(R.drawable.forearm3, "Two arms with amazing forearms")};
-
-    // Changes image and caption to the next image
-    public void nextImage(View v) {
-        imageCounter++;
-        if (imageCounter > 2) {
-            imageCounter = 0;
-        }
-        ImageView image = findViewById(R.id.imageCarousel);
-        TextView caption = findViewById(R.id.imageCaption);
-
-        image.setImageResource(images[imageCounter].source);
-        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
-    }
-
-    // Changes image and caption to the previous image
-    public void previousImage(View v) {
-        imageCounter--;
-        if (imageCounter < 0) {
-            imageCounter = 2;
-        }
-        ImageView image = findViewById(R.id.imageCarousel);
-        TextView caption = findViewById(R.id.imageCaption);
-
-        image.setImageResource(images[imageCounter].source);
-        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
     }
 
     // Shows the user's username at the top of the page

@@ -30,5 +30,7 @@
     <string name="_02">0</string>
     <string name="_03">0</string>
     <string name="homepage_visits">Homepage Visits:</string>
+    <string name="image_carousel">Image Carousel</string>
+    <string name="profile">Profile</string>
 
 </resources>
