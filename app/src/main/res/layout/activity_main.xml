@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/profilePicture2"
+        android:layout_width="268dp"
+        android:layout_height="172dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fingerExerciseCounterLabel"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <TextView
         android:id="@+id/fingerExerciseCounter"
         android:layout_width="wrap_content"
@@ -80,19 +92,19 @@
         android:id="@+id/saveUsernameButton"
         android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="40dp"
         android:onClick="saveUsername"
         android:text="@string/save_username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fingerExerciseCounterLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture2" />
 
     <EditText
         android:id="@+id/usernameInput"
         android:layout_width="169dp"
         android:layout_height="42dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/usernameInput"
@@ -100,7 +112,7 @@
         app:layout_constraintEnd_toStartOf="@+id/saveUsernameButton"
         app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fingerExerciseCounterLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture2" />
 
     <TextView
         android:id="@+id/username"

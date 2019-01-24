@@ -9,6 +9,8 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -16,18 +18,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_ID = "channelId";
     private int notificationId = 1;
+    String currentPhotoPath = null;
+    private ImageView profilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showUsername();
+        showProfilePicture();
         updateHomepageVisitCounter();
         loadCounter();
     }
@@ -134,5 +140,25 @@ public class MainActivity extends AppCompatActivity {
 
         TextView fingerExerciseField = findViewById(R.id.fingerExerciseCounter);
         fingerExerciseField .setText(String.valueOf(counter));
+    }
+
+    public void showProfilePicture() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.profile_pic), Context.MODE_PRIVATE);
+        currentPhotoPath = sharedPref.getString(getString(R.string.profile_pic), null);
+        updateProfilePicture(currentPhotoPath);
+    }
+
+    // Changes the profilePicture to be what the user set it to
+    private void updateProfilePicture(String imagePath) {
+        profilePic = findViewById(R.id.profilePicture2);
+        if (imagePath == null) {
+            profilePic.setImageResource(R.drawable.default_profile_pic);
+        } else {
+            File image = new File(imagePath);
+            Bitmap avatarImage = BitmapFactory.decodeFile(image.getAbsolutePath());
+            profilePic.setImageBitmap(avatarImage);
+        }
     }
 }

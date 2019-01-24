@@ -19,7 +19,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +44,25 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        profilePic = findViewById(R.id.profilePicture);
+        showUsername();
+        showProfilePicture();
+    }
+
+    // Shows the user's username at the top of the page
+    public void showUsername() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "please enter a username on the homepage");
+        TextView userData = findViewById(R.id.username6);
+        userData.setText("Hi, " + username);
+    }
+
+    public void showProfilePicture() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.profile_pic), Context.MODE_PRIVATE);
+        currentPhotoPath = sharedPref.getString(getString(R.string.profile_pic), null);
         updateProfilePicture(currentPhotoPath);
     }
 
@@ -91,7 +108,7 @@ public class Profile extends AppCompatActivity {
                 storageDir      // directory
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
+        // Save a file path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -148,6 +165,7 @@ public class Profile extends AppCompatActivity {
 
     // Changes the profilePicture to be what the user set it to
     private void updateProfilePicture(String imagePath) {
+        profilePic = findViewById(R.id.profilePicture);
         if (imagePath == null) {
             profilePic.setImageResource(R.drawable.default_profile_pic);
         } else {
@@ -203,7 +221,7 @@ public class Profile extends AppCompatActivity {
         }
     }
 
-    // Saves user's profile pic
+    // Saves user's profile pic to SharedPreferences
     public void saveProfilePic(String imagePath) {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(
