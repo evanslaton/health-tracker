@@ -19,6 +19,12 @@
 
 ![Lab 28: Layouts, DBs and ListViews](screenshots/screenshot3.png)
 
+Lab 29: Testing, Espresso and Permissions
+* Add Espresso tests for all of the Activities we’ve built so far. In particular, the Finger Exercises would benefit from testing, as would the image carousel.
+* Add the ability for users to enter a profile picture. Give them the option of taking a new photo with the camera, or using images already on their phone. Your app will need to request the appropriate permissions for this. Once users take a profile picture, you should display it on the homescreen.
+
+![Lab 29: Testing, Espresso and Permissions](screenshots/screenshot6.png)
+
 Lab 33: Threading, Async, Web
 * Add a replica of your Exercise model to the backend Spring app. Create a POST route that allows creating a new Exercise, and a GET route that responds with all Exercises currently in the database. Test these routes with Postman, deploy, and ensure there’s at least one Exercise in your deployed db.
 * When a user opens the Exercise Diary page, the app should make a request to the server to retrieve all the Exercises in the server’s database. It should display both those Exercises and the ones that are local to the device within the Diary page.
@@ -38,9 +44,9 @@ Lab 33: Threading, Async, Web
 * 1/8/2019 - Added Lab 26 feature one (finger exerciser).
 * 1/9/2019 - Added Lab 26 features two and three (stopwatch and image carousel).
 * 1/10/2019 - Completed Lab 27:
-    * Moved stopwatch and finger exercise to their own pages.
-    * Added buttons to the homescreen so users access the new pages.
-    * Created a button that will send a notification every 2 hours to the user reminding them to drink water (to test every 3 seconds uncomment line 57 and comment out line 58).
+  * Moved stopwatch and finger exercise to their own pages.
+  * Added buttons to the homescreen so users access the new pages.
+  * Created a button that will send a notification every 2 hours to the user reminding them to drink water (to test every 3 seconds uncomment line 57 and comment out line 58).
 * 1/14/2019 to 1/16-2019 - Completed feature tasks for Lab 28:
   * Set up an Exercise database
   * Created a new Exercise Diary activity
@@ -51,9 +57,19 @@ Lab 33: Threading, Async, Web
   * Any logic about turning an exercise into its String representation
 * 1/18/2019 - Finished Lab 33 (adding and viewing exercise to Heroku Database) and the string.xml and location features for Lab 34
 * 1/21/2019 - Finished the shared preferences feature for Lab 34
+* 1/23/2019:
+  * Users can take a picture or choose a picture from their files and upload them as their profile picture
+  * Moved the image carousel to its own page
+* 1/24/2019 - Wrote Espresso tests for the Finger Exercise, Stopwatch and Image Carousel pages
 
-## Health-Tracker-Backend
+## Health-Tracker URL
+http://health-tracker-backend.herokuapp.com/exercises
+  * GET: returns json of exercises
+  * POST: must include a title, quantity, description, latitude and longitude params
+
+## Health-Tracker-Backend Repo
 [Health-Tracker-Backend](https://github.com/evanslaton/health-tracker-backend)
+
 
 ## Libraries / Third Party Sources
 * Stopwatch code by Amit Kumar Singh - https://www.c-sharpcorner.com/article/creating-stop-watch-android-application-tutorial/

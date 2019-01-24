@@ -21,16 +21,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+// Tests the Finger Counter Exercise button
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class UITestFingerExercise {
-    // Checks Finger Counter Exercise Button
     @Rule
     public ActivityTestRule<FingerExercise> mActivityRule =
             new ActivityTestRule<>(FingerExercise.class);
 
+    // Tests that the counter value being displayed is incremented every time the user presses the finger exercise button
     @Test
-    public void counterIncrementsOnButtonPressed() {
+    public void testFingerExerciser() {
         for (int i = 0; i < 10; i++) {
             String counterValue = getText(withId(R.id.counter));
             String counterIncrementedByOne = String.valueOf(Integer.parseInt(counterValue) + 1);
