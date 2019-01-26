@@ -60,7 +60,8 @@ Lab 33: Threading, Async, Web
 * 1/23/2019:
   * Users can take a picture or choose a picture from their files and upload them as their profile picture
   * Moved the image carousel to its own page
-* 1/24/2019 - Wrote Espresso tests for the Finger Exercise, Stopwatch and Image Carousel pages
+* 1/24/2019 - Wrote Espresso tests for the Finger Exercise, Stopwatch and Image Carousel activities
+* 1/25/2019 - Wrote Espresso tests for the Profile activity
 
 ## Health-Tracker URL
 http://health-tracker-backend.herokuapp.com/exercises
