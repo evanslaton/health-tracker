@@ -42,7 +42,7 @@ public class ExampleInstrumentedTest {
     // Tests adding and retrieving an exercise and turning an exercise into its String representation
     @Test
     public void writeUserAndReadInList() throws Exception {
-        Exercise newExercise = new Exercise("Test", 5000, "This is a test description");
+        Exercise newExercise = new Exercise("Test", 5000, "This is a test description", "-1", "1");
         exerciseDao.insertExercise(newExercise);
         List<Exercise> exercises = exerciseDao.getAll();
         assertFalse(exercises.isEmpty());

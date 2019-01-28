@@ -9,24 +9,31 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_ID = "channelId";
     private int notificationId = 1;
+    String currentPhotoPath = null;
+    private ImageView profilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showUsername();
+        showProfilePicture();
         updateHomepageVisitCounter();
         loadCounter();
     }
@@ -49,6 +56,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(diaryIntent);
     }
 
+    // Takes the user to the image carousel
+    public void goToImageCarousel(View v) {
+        Intent imageCarouselIntent = new Intent(this, ImageCarousel.class);
+        startActivity(imageCarouselIntent);
+    }
+
+    // Takes the user to the profile page
+    public void goToProfile(View v) {
+        Intent ProfileIntent = new Intent(this, Profile.class);
+        startActivity(ProfileIntent);
+    }
+
     // Notifies the user to drink water every 2 hours, swap in line 65 for 67 to test every 5 seconds
     public void notifyUserToDrinkWater(View v) {
         // from https://stackoverflow.com/questions/9406523/android-want-app-to-perform-tasks-every-second
@@ -68,38 +87,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 3000, 3000);
 //          }, 7200000, 7200000);
-    }
-
-    // Image carousel
-    int imageCounter = 0;
-    Image[] images = {new Image(R.drawable.forearm1, "Be the best version of yourself"),
-            new Image(R.drawable.forearm2, "Only 7 minutes a day"),
-            new Image(R.drawable.forearm3, "Two arms with amazing forearms")};
-
-    // Changes image and caption to the next image
-    public void nextImage(View v) {
-        imageCounter++;
-        if (imageCounter > 2) {
-            imageCounter = 0;
-        }
-        ImageView image = findViewById(R.id.imageCarousel);
-        TextView caption = findViewById(R.id.imageCaption);
-
-        image.setImageResource(images[imageCounter].source);
-        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
-    }
-
-    // Changes image and caption to the previous image
-    public void previousImage(View v) {
-        imageCounter--;
-        if (imageCounter < 0) {
-            imageCounter = 2;
-        }
-        ImageView image = findViewById(R.id.imageCarousel);
-        TextView caption = findViewById(R.id.imageCaption);
-
-        image.setImageResource(images[imageCounter].source);
-        caption.setText(images[imageCounter].caption + " (" + (imageCounter + 1) + "/3)");
     }
 
     // Shows the user's username at the top of the page
@@ -153,5 +140,25 @@ public class MainActivity extends AppCompatActivity {
 
         TextView fingerExerciseField = findViewById(R.id.fingerExerciseCounter);
         fingerExerciseField .setText(String.valueOf(counter));
+    }
+
+    public void showProfilePicture() {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.profile_pic), Context.MODE_PRIVATE);
+        currentPhotoPath = sharedPref.getString(getString(R.string.profile_pic), null);
+        updateProfilePicture(currentPhotoPath);
+    }
+
+    // Changes the profilePicture to be what the user set it to
+    private void updateProfilePicture(String imagePath) {
+        profilePic = findViewById(R.id.profilePicture2);
+        if (imagePath == null) {
+            profilePic.setImageResource(R.drawable.default_profile_pic);
+        } else {
+            File image = new File(imagePath);
+            Bitmap avatarImage = BitmapFactory.decodeFile(image.getAbsolutePath());
+            profilePic.setImageBitmap(avatarImage);
+        }
     }
 }
