@@ -57,11 +57,14 @@ Lab 33: Threading, Async, Web
   * Any logic about turning an exercise into its String representation
 * 1/18/2019 - Finished Lab 33 (adding and viewing exercise to Heroku Database) and the string.xml and location features for Lab 34
 * 1/21/2019 - Finished the shared preferences feature for Lab 34
+* 1/22/2019 - Made progress towards setting up user signup/login
 * 1/23/2019:
   * Users can take a picture or choose a picture from their files and upload them as their profile picture
   * Moved the image carousel to its own page
 * 1/24/2019 - Wrote Espresso tests for the Finger Exercise, Stopwatch and Image Carousel activities
 * 1/25/2019 - Wrote Espresso tests for the Profile activity
+* 1/26/2019 - Added Espresso test for camera activity
+* 1/27/2019 - Updated readme for both frontend and backend to include link to Heroku
 
 ## Health-Tracker URL
 http://health-tracker-backend.herokuapp.com/exercises
